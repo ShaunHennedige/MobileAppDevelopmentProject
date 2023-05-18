@@ -8,8 +8,8 @@ const Home = () => {
   const {userData} = React.useContext(AuthContext);
   return (
     <View style={styles.container}>
-      <Card style={{width: '100%', flex: 1}}>
-        <Card.Cover source={require('../../assets/intro.gif')} />
+      <Card style={{width: '88%', flex: 1}}>
+        <Card.Cover source={require('../../assets/MYLMS.png')} />
         <Card.Title
           title={<Text variant="titleLarge">Welcome, {userData.name}!</Text>}
           subtitle={'Account statistics:'}
@@ -18,12 +18,12 @@ const Home = () => {
         />
         <Card.Content>
           <View style={styles.cardSection}>
-            <Text variant="bodyLarge">Total distance:</Text>
-            <Text variant="titleLarge">0 Km</Text>
+            <Text variant="bodyLarge">Total Cources:</Text>
+            <Text variant="titleLarge">6</Text>
           </View>
           <View style={styles.cardSection}>
-            <Text variant="bodyLarge">Total expense:</Text>
-            <Text variant="titleLarge">0 ~</Text>
+            <Text variant="bodyLarge">Total Completed Cources:</Text>
+            <Text variant="titleLarge">0</Text>
           </View>
         </Card.Content>
       </Card>

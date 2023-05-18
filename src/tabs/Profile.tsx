@@ -29,6 +29,10 @@ const Profile = () => {
             <Text variant="bodyLarge">User ID:</Text>
             <Text variant="titleLarge">{auth.currentUser?.uid}</Text>
           </View>
+          <View style={styles.cardSection}>
+            <Text variant="bodyLarge">Role:</Text>
+            <Text variant="titleLarge">{userData.role}</Text>
+          </View>
           <View>
             <Button
               icon="logout"

@@ -26,7 +26,7 @@ const SignUp = () => {
   return (
     <View style={styles.auth}>
       <Text variant="bodyMedium" style={{alignSelf: 'center'}}>
-        Welcome to RouteSync service. To get started, please enter your details below.
+        Welcome to MY LMS service. To get started, please enter your details below.
       </Text>
       {!!status && (
         <Text
@@ -67,8 +67,8 @@ const SignUp = () => {
         onChangeText={setPass02}
       />
       <RadioButton.Group onValueChange={newRole => setRole(newRole)} value={role}>
-        <RadioButton.Item label="Sign up as a Passenger" value={Roles.User.toString()} />
-        <RadioButton.Item label="Sign up as a Driver" value={Roles.Driver.toString()} />
+        <RadioButton.Item label="Sign up as a Student" value={Roles.Student.toString()} />
+        <RadioButton.Item label="Sign up as a Teacher" value={Roles.Teacher.toString()} />
       </RadioButton.Group>
       <Button
         style={{margin: 15}}

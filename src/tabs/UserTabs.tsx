@@ -3,12 +3,10 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {AuthContext, Roles} from '../util/AuthContext';
 import Icon from '@expo/vector-icons/FontAwesome';
 import Home from './Home';
-import Map from './Map';
-import Scanner from './Scanner';
+import Calender from './Calender';
 import Admin from './Admin';
 import Profile from './Profile';
-import Payment from './Payment';
-import Checkout from '../util/Checkout';
+import Courses from './Courses';
 
 const UserTabs = createBottomTabNavigator();
 const UserTabsScreen = () => {
@@ -25,20 +23,17 @@ const UserTabsScreen = () => {
             case 'Dashboard':
               iconname = 'home';
               break;
-            case 'Map':
-              iconname = 'map';
-              break;
-            case 'Scanner':
-              iconname = 'qrcode';
+            case 'Calender':
+              iconname = 'calendar';
               break;
             case 'Admin':
               iconname = 'info-circle';
               break;
+            case 'Courses':
+              iconname = 'info-circle';
+              break;
             case 'Profile':
               iconname = 'user';
-              break;
-            case 'Payment':
-              iconname = 'paypal';
               break;
             case 'Checkout':
               iconname = 'check-square-o';
@@ -47,28 +42,24 @@ const UserTabsScreen = () => {
           return <Icon name={iconname} color={color} size={size} />;
         },
       })}>
-      {userData.role === Roles.Driver ? (
+      {userData.role === Roles.Teacher ? (
         <>
           <UserTabs.Screen name="Dashboard" component={Home} />
           <UserTabs.Screen name="Admin" component={Admin} />
           <UserTabs.Screen name="Profile" component={Profile} />
+          <UserTabs.Screen name="Courses" component={Courses} />
         </>
-      ) : userData.role === Roles.User ? (
+      ) : userData.role === Roles.Student ? (
         <>
           <UserTabs.Screen name="Dashboard" component={Home} />
-          <UserTabs.Screen
-            name="Map"
-            component={Map}
-            options={{headerShown: false}}
-          />
-          <UserTabs.Screen name="Scanner" component={Scanner} />
-          {/* <UserTabs.Screen name="Checkout" component={Checkout} /> */}
+          <UserTabs.Screen name="Courses" component={Courses} />
+          <UserTabs.Screen name="Calender" component={Calender} />
           <UserTabs.Screen name="Profile" component={Profile} />
         </>
       ) : (
         <>
           <UserTabs.Screen name="Dashboard" component={Home} />
-          <UserTabs.Screen name="Scanner" component={Scanner} />
+          <UserTabs.Screen name="Calender" component={Calender} />
           <UserTabs.Screen name="Profile" component={Profile} />
         </>
       )}

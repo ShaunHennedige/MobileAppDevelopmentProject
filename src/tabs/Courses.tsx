@@ -1,94 +1,117 @@
-import React, { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
-import { Card, Button, TextInput } from 'react-native-paper';
+import React, {useState} from 'react';
+import {View, ScrollView} from 'react-native';
+import {Card, Button, Text} from 'react-native-paper';
+import * as DocumentPicker from 'expo-document-picker';
+import styles from '../util/styles';
 
-interface Course {
-  id: string;
-  title: string;
-}
+const courseList = [
+  {
+    title: 'Mobile App Development',
+    id: 'PG 2020',
+  },
+  {
+    title: 'Software Development',
+    id: 'PG 2021',
+  },
+  {
+    title: 'Arduino Development',
+    id: 'PG 2022',
+  },
+  {
+    title: 'Network Devevelopmet',
+    id: 'PG 2023',
+  },
+  {
+    title: 'System Analysis And Design',
+    id: 'PG 2024',
+  },
+  {
+    title: 'Computer Architecture',
+    id: 'PG 2025',
+  },
+];
 
-interface CourseDetailsProps {
-  course: Course;
-}
-
-const CourseDetails: React.FC<CourseDetailsProps> = ({ course }) => {
+const CourseCard = (props: {title: string; id: string}) => {
   const [file, setFile] = useState('');
   const [isUploading, setIsUploading] = useState(false);
 
-  const handleWorkSubmission = () => {
-    // Logic for submitting work
-    alert(`Submitting work for course: ${course.title}`);
-  };
-
   const handleLectureNotes = () => {
     // Logic for accessing lecture notes
-    alert(`Accessing lecture notes for course: ${course.title}`);
+    alert(`Accessing lecture notes for course: ${props.title}`);
   };
 
   const handleLecturePowerpoints = () => {
     // Logic for accessing lecture powerpoints
-    alert(`Accessing lecture powerpoints for course: ${course.title}`);
+    alert(`Accessing lecture powerpoints for course: ${props.title}`);
   };
 
-  const handleFileUpload = () => {
+  const handleFileUpload = async () => {
     setIsUploading(true);
     // Simulating file upload delay for demonstration purposes
-    setTimeout(() => {
-      setIsUploading(false);
-      setFile('');
-      alert(`File uploaded successfully for course: ${course.title}`);
-    }, 2000);
+    const doc = await DocumentPicker.getDocumentAsync({});
+    if (doc.type === 'cancel') {
+      alert('Aborted');
+    } else {
+      console.log(doc.uri);
+      setTimeout(() => {
+        setIsUploading(false);
+        setFile('');
+        alert(`File uploaded successfully for course: ${props.title}`);
+      }, 2000);
+    }
   };
 
   return (
-    <>
-      <Card.Title title={course.title} />
-      <Card.Actions style={styles.buttonContainer}>
-        <Button style={styles.button} onPress={handleWorkSubmission}>
-          Submit Work
-        </Button>
-        <Button style={styles.button} onPress={handleLectureNotes}>
-          Lecture Notes
-        </Button>
-        <Button style={styles.button} onPress={handleLecturePowerpoints}>
-          Lecture Powerpoints
-        </Button>
-      </Card.Actions>
-      <View style={styles.uploadContainer}>
-        <TextInput
-          label="Upload File"
-          value={file}
-          onChangeText={setFile}
-          disabled={isUploading}
-        />
-        <Button
-          style={styles.uploadButton}
-          onPress={handleFileUpload}
-          loading={isUploading}
-          disabled={isUploading || file === ''}
-        >
-          Upload
-        </Button>
-      </View>
-    </>
+    <Card style={{width: '100%', flex: 1, marginTop: 20}}>
+      <Card.Title title={<Text variant="titleLarge">{props.title}</Text>} />
+      <Card.Content>
+        <View style={styles.cardSection}>
+          <Text variant="bodyLarge">Module ID:</Text>
+          <Text variant="titleLarge">{props.id}</Text>
+        </View>
+        <View>
+          <Button
+            mode="contained"
+            onPress={handleFileUpload}
+            style={{margin: 10}}
+            contentStyle={{height: 50}}
+            labelStyle={{fontSize: 16}}>
+            Upload Coursework
+          </Button>
+          <Button
+            mode="contained"
+            onPress={handleLectureNotes}
+            style={{margin: 10}}
+            contentStyle={{height: 50}}
+            labelStyle={{fontSize: 16}}>
+            View Lecture Notes
+          </Button>
+          <Button
+            mode="contained"
+            onPress={handleLecturePowerpoints}
+            style={{margin: 10}}
+            contentStyle={{height: 50}}
+            labelStyle={{fontSize: 16}}>
+            View Slides
+          </Button>
+        </View>
+      </Card.Content>
+    </Card>
   );
 };
 
-const styles = StyleSheet.create({
-  buttonContainer: {
-    marginTop: 10,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-  },
-  button: {
-    paddingHorizontal: 20,
-  },
-  uploadContainer: {
-    marginTop: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  uploadButton: {
-    marginLeft: 10,
-  },
-});
+const CourseDetails = () => {
+  return (
+    <ScrollView
+      contentContainerStyle={{
+        justifyContent: 'space-evenly',
+        padding: 20,
+      }}>
+      {courseList.map((course, i) => (
+        <CourseCard title={course.title} id={course.id} key={i} />
+      ))}
+    </ScrollView>
+  );
+};
+
+export default CourseDetails;

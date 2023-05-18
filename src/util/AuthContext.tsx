@@ -2,7 +2,6 @@ import React from 'react';
 import {
   onAuthStateChanged,
   beforeAuthStateChanged,
-  signInAnonymously,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signOut,
@@ -11,8 +10,8 @@ import {auth} from '../../config/FirebaseConfig';
 import {setUserData, getUserData} from './FirestoreUtils';
 
 enum Roles {
-  Driver = 'DRIVER',
-  User = 'USER',
+  Teacher = 'TEACHER',
+  Student = 'STUDENT',
   Anon = 'ANON',
 }
 
@@ -23,7 +22,6 @@ const AuthContext = React.createContext({
     _password: string,
     _data: {role: string; name: string},
   ) => {},
-  anonLog: () => {},
   signOut: () => {},
   loading: true,
   logged: false,
@@ -77,19 +75,6 @@ const AuthProvider = ({children}) => {
     }
   };
 
-  const anonLogFunc = async () => {
-    setLoading(true);
-    try {
-      // anon mode
-      await signInAnonymously(auth);
-      setStatus('');
-    } catch (error) {
-      console.log(error.message);
-      setStatus('Something went wrong. Please try again.');
-      setLoading(false);
-    }
-  };
-
   const signOutFunc = async () => {
     signOut(auth);
     setData({role: Roles.Anon, name: '<None>'});
@@ -130,7 +115,6 @@ const AuthProvider = ({children}) => {
       value={{
         signIn: signInFunc,
         signUp: signUpFunc,
-        anonLog: anonLogFunc,
         signOut: signOutFunc,
         loading,
         logged,

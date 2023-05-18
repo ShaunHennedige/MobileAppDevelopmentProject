@@ -2,8 +2,8 @@ import 'dotenv/config';
 
 export default {
   expo: {
-    name: 'RouteSync',
-    slug: 'computing-project-app',
+    name: 'MY LMS',
+    slug: 'MobileAppDevelopmentProject',
     version: '1.0.0',
     orientation: 'portrait',
     icon: './assets/icon.png',
@@ -20,7 +20,6 @@ export default {
           cameraPermission: 'Allow $(PRODUCT_NAME) to access camera.',
         },
       ],
-
     ],
     assetBundlePatterns: ['**/*'],
     ios: {
